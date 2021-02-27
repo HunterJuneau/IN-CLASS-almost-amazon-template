@@ -1,8 +1,8 @@
 import addBookForm from '../components/forms/addBookForm';
-import { createBook } from '../helpers/data/bookData';
+import { deleteBook, createBook } from '../helpers/data/bookData';
 import { showBooks } from '../components/books';
 import addAuthorForm from '../components/forms/addAuthorForm';
-import { createAuthor } from '../helpers/data/authorData';
+import { createAuthor, deleteAuthor } from '../helpers/data/authorData';
 import { showAuthors } from '../components/authors';
 
 const domEvents = () => {
@@ -10,7 +10,11 @@ const domEvents = () => {
     // CLICK EVENT FOR DELETING A BOOK
     if (e.target.id.includes('delete-book')) {
       if (window.confirm('Want to delete?')) {
-        console.warn('CLICKED DELETE BOOK', e.target.id);
+        const firebaseKey = e.target.id.split('--')[1];
+
+        deleteBook(firebaseKey).then((booksArray) => {
+          showBooks(booksArray);
+        });
       }
     }
 
@@ -42,6 +46,16 @@ const domEvents = () => {
     }
 
     // ADD CLICK EVENT FOR DELETING AN AUTHOR
+    if (e.target.id.includes('delete-author')) {
+      if (window.confirm('Want to delete?')) {
+        const firebaseKey = e.target.id.split('--')[1];
+
+        deleteAuthor(firebaseKey).then((authorsArray) => {
+          showAuthors(authorsArray);
+        });
+      }
+    }
+
     // ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
       addAuthorForm();

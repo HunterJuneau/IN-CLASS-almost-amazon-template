@@ -1,7 +1,7 @@
 import signOut from '../helpers/auth/signOut';
-import { getBooks } from '../helpers/data/bookData';
+import { getSaleBooks, getBooks } from '../helpers/data/bookData';
 import { showBooks } from '../components/books';
-import { getAuthors } from '../helpers/data/authorData';
+import { getAuthors, getFavoriteAuthors } from '../helpers/data/authorData';
 import { showAuthors, emptyAuthors } from '../components/authors';
 
 // navigation events
@@ -11,7 +11,12 @@ const navigationEvents = () => {
 
   // BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    console.warn('Sale Books');
+    getSaleBooks().then((booksArray) => showBooks(booksArray));
+  });
+
+  // FAVORITE AUTHORS
+  document.querySelector('#favorite-authors').addEventListener('click', () => {
+    getFavoriteAuthors().then((authorsArray) => showAuthors(authorsArray));
   });
 
   // ALL BOOKS
