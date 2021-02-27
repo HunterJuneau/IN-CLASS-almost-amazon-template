@@ -1,7 +1,10 @@
 // FIXME: STUDENTS show your authors
 
 const showAuthors = (array) => {
+  document.querySelector('#add-button').innerHTML = '<button class="btn btn-success btn-lg mb-4" id="add-author-btn">Add an Author</button>';
+
   document.querySelector('#store').innerHTML = '';
+  document.querySelector('#form-container').innerHTML = '';
   // CREATE A BUTTON TO ADD BOOKS
 
   array.forEach((item) => {

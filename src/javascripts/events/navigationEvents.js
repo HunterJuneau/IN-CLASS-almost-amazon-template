@@ -1,6 +1,7 @@
 import signOut from '../helpers/auth/signOut';
-import getBooks from '../helpers/data/bookData';
-import getAuthors from '../helpers/data/authorData';
+import { getBooks } from '../helpers/data/bookData';
+import { showBooks } from '../components/books';
+import { getAuthors } from '../helpers/data/authorData';
 import { showAuthors, emptyAuthors } from '../components/authors';
 
 // navigation events
@@ -14,7 +15,9 @@ const navigationEvents = () => {
   });
 
   // ALL BOOKS
-  document.querySelector('#all-books').addEventListener('click', () => getBooks);
+  document.querySelector('#all-books').addEventListener('click', () => {
+    getBooks().then((booksArray) => showBooks(booksArray));
+  });
 
   // SEARCH
   document.querySelector('#search').addEventListener('keyup', (e) => {

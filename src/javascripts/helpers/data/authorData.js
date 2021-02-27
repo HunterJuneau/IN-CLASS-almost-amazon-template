@@ -1,13 +1,14 @@
 import axios from 'axios';
+import firebaseConfig from '../auth/apiKeys';
 
-const baseUrl = 'https://almost-d964d-default-rtdb.firebaseio.com/authors';
+const baseUrl = firebaseConfig.databaseURL;
 
 // API CALLS FOR AUTHORS
 
 // GET AUTHORS
 const getAuthors = () => new Promise((resolve, reject) => {
   axios
-    .get(`${baseUrl}.json`)
+    .get(`${baseUrl}/authors.json`)
     .then((response) => {
       resolve(Object.values(response.data));
     })
@@ -16,7 +17,18 @@ const getAuthors = () => new Promise((resolve, reject) => {
 
 // DELETE AUTHOR
 // CREATE AUTHOR
+const createAuthor = (authorObj) => new Promise((resolve, reject) => {
+  axios
+    .post(`${baseUrl}/authors.json`, authorObj)
+    .then((response) => {
+      axios.patch(`${baseUrl}/authors/${response.data.name}.json`, { firebaseKey: response.data.name }).then(() => {
+        resolve(getAuthors());
+      });
+    })
+    .catch((error) => reject(error));
+});
+
 // UPDATE AUTHOR
 // SEARCH AUTHORS
 
-export default getAuthors;
+export { getAuthors, createAuthor };
