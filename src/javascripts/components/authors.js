@@ -5,8 +5,12 @@ const showAuthors = (array) => {
   // CREATE A BUTTON TO ADD BOOKS
 
   array.forEach((item) => {
-    // FIXME: STUDENTS create cards for your authors
-    document.querySelector('#store').innerHTML += `${item}`;
+    document.querySelector('#store').innerHTML += `<div class="card">
+      <div class="card-body" style="height: 180px;">
+      <h5 class="card-title">${item.first_name} ${item.last_name}</h5>
+      <p class="card-text bold">${item.email}</p>
+      </div>
+    </div>`;
   });
 };
 
