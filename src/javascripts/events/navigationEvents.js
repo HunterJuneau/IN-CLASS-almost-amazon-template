@@ -1,19 +1,27 @@
 import signOut from '../helpers/auth/signOut';
+import { getSaleBooks, getBooks } from '../helpers/data/bookData';
+import { showBooks } from '../components/books';
+import { getAuthors, getFavoriteAuthors } from '../helpers/data/authorData';
+import { showAuthors, emptyAuthors } from '../components/authors';
 
 // navigation events
 const navigationEvents = () => {
   // LOGOUT BUTTON
-  document.querySelector('#logout-button')
-    .addEventListener('click', signOut);
+  document.querySelector('#logout-button').addEventListener('click', signOut);
 
   // BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    console.warn('Sale Books');
+    getSaleBooks().then((booksArray) => showBooks(booksArray));
+  });
+
+  // FAVORITE AUTHORS
+  document.querySelector('#favorite-authors').addEventListener('click', () => {
+    getFavoriteAuthors().then((authorsArray) => showAuthors(authorsArray));
   });
 
   // ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
-    console.warn('All Books');
+    getBooks().then((booksArray) => showBooks(booksArray));
   });
 
   // SEARCH
@@ -35,6 +43,16 @@ const navigationEvents = () => {
   // 1. When a user clicks the authors link, make a call to firebase to get all authors
   // 2. Convert the response to an array because that is what the makeAuthors function is expecting
   // 3. If the array is empty because there are no authors, make sure to use the emptyAuthor function
+
+  document.querySelector('#authors').addEventListener('click', () => {
+    getAuthors().then((authors) => {
+      if (authors) {
+        showAuthors(authors);
+      } else {
+        emptyAuthors();
+      }
+    });
+  });
 };
 
 export default navigationEvents;
